@@ -3,10 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import socket
 import time
+import random
 
 
-
-
+global counter
+counter=0
 class Geo():
     def __init__(self):
         self.src_filename = r'C:\Users\emrea\Desktop\deep-ternaloc\deep-ternaloc\Studies\emre\n38_e038_1arc_v3.dt2'
@@ -20,7 +21,8 @@ class Geo():
         self.rb=self.src_ds.GetRasterBand(1)
         self.data_array = self.src_ds.ReadAsArray()
         self.data_array=self.data_array.astype(int)[:,:]
-        
+        print(np.shape(self.data_array))
+        print(3601*3601)
         return self.data_array
     
 
@@ -36,7 +38,7 @@ class Plotting():
 
     def plot_array(self):
         plt.contour(self.data_array, cmap = "viridis", 
-                    levels = list(range(0, 10000, 100)))
+                    levels = list(range(0, 2598, 100)))
         
         plt.title("Elevation Contours of BOLU ANKARA")
         cbar = plt.colorbar()
@@ -46,11 +48,11 @@ class Plotting():
     def find_nearly_point(self,received_data):
 
         
-        received_data=1000-int(received_data)
+        received_data=3000-int(received_data)
         
         print(received_data)
-        interval_X = received_data+50
-        interval_Y = received_data-50
+        interval_X = received_data+5
+        interval_Y = received_data-5
         
 
         
@@ -59,14 +61,19 @@ class Plotting():
 
         
         near_points=np.where(np.logical_and(interval_Y<=self.data_array,self.data_array <=interval_X))
-        print(np.where(self.data_array<=500))
+
         print(near_points)
         
         
-        plt.plot(near_points[1], near_points[0], "ro")
+        col = (np.random.random(), np.random.random(), np.random.random())
         print("abo")
-        plt.savefig('foo.png')
-        
+        if counter ==5:
+            plt.scatter(near_points[1], near_points[0], c=[col],s=500, marker='x')
+
+            plt.show()
+        else:
+            plt.scatter(near_points[1], near_points[0], c=[col])
+            
 
         
         
@@ -83,9 +90,11 @@ class UnityInteraction():
     def connection_loop(self):
         time.sleep(0.5) #sleep 0.5 sec
 
-
+        print("sleep bitti")
         self.sock.sendall("posString".encode("UTF-8")) #Converting string to Byte, and sending it to C#
+        print("data yollandi")
         self.receivedData = self.sock.recv(1024).decode("UTF-8") #receiveing data in Byte fron C#, and converting it to String
+        print("data alindi")
         self.receivedData = self.receivedData.split(".")[0]
         print(self.receivedData)
         
@@ -98,10 +107,13 @@ if __name__ == "__main__":
     plot_object = Plotting(data_array)
     plot_object.plot_array()
     unity_object = UnityInteraction()
-    while True:
+    print("loopa giriyor")
+    while counter<=5:
         received_data=unity_object.connection_loop()
+        print("datayi aldim")
         plot_object.find_nearly_point(received_data)
-        break
+        print("plotladim bitti")
+        counter=counter+1
         
         
         

@@ -9,7 +9,8 @@ src_ds=gdal.Open(src_filename)
 gt=src_ds.GetGeoTransform()
 rb=src_ds.GetRasterBand(1)
 data_array = src_ds.ReadAsArray()
-data_array=data_array.astype(int)[:,:]  
+data_array=data_array.astype(int)[:,:]
+print("max {}".format(np.amax(data_array)))  
 #print(data_array[0,1])
 
 #print(len(data_array))
@@ -19,11 +20,11 @@ data_array=data_array.astype(int)[:,:]
 fig = plt.figure(figsize = (16, 12))
 ax = fig.add_subplot(111)
 plt.contour(data_array, cmap = "viridis", 
-            levels = list(range(0, 2000, 100)))
+            levels = list(range(0, 2598, 100)))
 
 abo = np.where(data_array == 2258)
-print(abo)
-plt.plot(np.where(data_array == 2258)[1], np.where(data_array == 2258)[0], "ro")
+#print(abo)
+plt.scatter(np.where(data_array ==2258)[1], np.where(data_array == 2258)[0],s=500)
 #plt.plot(data_array[5,20], data_array[6,21], "ro")
 #plt.plot(data_array[107,20], data_array[93,670], "ro")
 plt.title("Elevation Contours of BOLU ANKARA")
