@@ -20,11 +20,11 @@ print("max {}".format(np.amax(data_array)))
 fig = plt.figure(figsize = (16, 12))
 ax = fig.add_subplot(111)
 plt.contour(data_array, cmap = "viridis", 
-            levels = list(range(0, 2598, 100)))
+            levels = list(range(0, 2598, 105)))
 
-abo = np.where(data_array == 2258)
+
 #print(abo)
-plt.scatter(np.where(data_array ==2258)[1], np.where(data_array == 2258)[0],s=500)
+
 #plt.plot(data_array[5,20], data_array[6,21], "ro")
 #plt.plot(data_array[107,20], data_array[93,670], "ro")
 plt.title("Elevation Contours of BOLU ANKARA")
