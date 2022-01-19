@@ -18,10 +18,15 @@ class Particle(Robot):
 
     def probability_density_function(self, mu, x):
         ### STUDENT CODE START
+        sigma = self.measurement_sigma
+
+        return 1/(sigma*math.sqrt(2*math.pi))*math.e**(-0.5 * ((x-mu)/sigma)**2)
+
         ### STUDENT CODE END
 
     def update_weight(self, robot_dist):
         ### STUDENT CODE START
+        self.weight = self.probability_density_function(robot_dist, self.pole_dist)
         ### STUDENT CODE START
 
 

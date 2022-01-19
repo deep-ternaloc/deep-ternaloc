@@ -14,6 +14,13 @@ class Robot:
     def measure(self, poles):
         ### START STUDENT CODE
         # Set self.pole_dist to the distance to the closest pole.
+        for pole in poles:
+            if pole-self.pos <= self.max_measurement and pole-self.pos > 0:
+                self.pole_dist = pole-self.pos
+                break
+            else:
+                self.pole_dist = -100
+        ### END STUDENT CODE
 
         ### END STUDENT CODE
 

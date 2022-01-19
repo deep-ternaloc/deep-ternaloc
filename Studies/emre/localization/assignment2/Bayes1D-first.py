@@ -1,3 +1,4 @@
+from ast import PyCF_ALLOW_TOP_LEVEL_AWAIT
 from sim.plot import plot
 import numpy as np
 
@@ -20,6 +21,15 @@ def bayes(PBA, PA, PB):
     # STUDENT CODE START
     # Make this function return the answer to Bayes Rule.
 
+
+
+    #PB is total probability
+    #PA is prior probability
+    #PAB is posterior probability
+    #PBA is probability of detecting a pole, given the robot is located in location x (?)
+
+    PAB = PBA * PA / PB
+
     # STUDENT CODE END
     return PAB
 
@@ -28,12 +38,27 @@ def shift_priors(P_loc_i):
     # STUDENT CODE START
     # Shift all probabilities to the right by one.
 
+    for i in range(len(P_loc_i)-1,0,-1):
+        P_loc_i[i] = P_loc_i[i-1]
+
+    P_loc_i[0] = 0
+
+
     # STUDENT CODE END
 
 
 def update_loc_probability():
+    
     # STUDENT CODE START
     # Perform Bayes Rule on each location.
+    for i in range(len(P_loc_i_prior)):
+        if robot.detect_pole(poles):
+            P_loc_i_posterior[i] = bayes(P_D_given_loc_i[i],P_loc_i_prior[i],P_D)
+        else:
+            P_loc_i_posterior[i] = bayes(P_not_D_given_loc_i[i],P_loc_i_prior[i],P_not_D)
+
+
+
 
     # STUDENT CODE END
 
@@ -64,11 +89,19 @@ P_not_D_given_loc_i = np.zeros(distance)
 
 # STUDENT CODE START
 # Set the prior as if the robot has equal probability to be in each location.
-
+P_loc_i_prior += 1/distance
 # Set probabilities of detecing a pole or not detecting a pole.
+P_D = len(poles)/distance
+P_not_D = 1 - P_D
 
 # Set the probabilities for detecting (or not detecting) a pole for each
 # location i.
+for i in range(len(P_D_given_loc_i)):
+    if i+1 in poles:
+        P_D_given_loc_i[i] = 1
+    else:
+        P_D_given_loc_i[i] = 0
+P_not_D_given_loc_i = 1 - P_D_given_loc_i
 
 # STUDENT CODE END
 
