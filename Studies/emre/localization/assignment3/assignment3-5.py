@@ -20,18 +20,26 @@ class Particle(Robot):
 
     def predict(self):
         ### START STUDENT CODE
-        ### END STUDENT CODE
+        self.pos = np.random.normal(self.pos+ self.move_dist, self.movement_sigma)
+
+        ### END STUDENT CODEq
 
 def resample_particles(particles):
     ### START STUDENT CODE
     # Please fill this array with the output of the r.choices function.
-    resample = []
+    weights = []
+
+    for particle in particles:
+        weights += [particle.weight]
+
+    resample = r.choices(range(num_particles), weights=weights, k=num_particles)
+
     print(resample)
     
     # Please fill this array with resampled partciles.
     resampled_particles = []
-
-    ### END STUDENT CODE
+    for i in resample:
+        resampled_particles += [Particle(particles[i].pos)]
 
     # Set all resampled particles to a different color.
     for i in resample:
