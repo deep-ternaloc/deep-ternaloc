@@ -10,7 +10,7 @@ global counter
 counter=0
 class Geo():
     def __init__(self):
-        self.src_filename = r'C:\Users\emrea\Desktop\deep-ternaloc\deep-ternaloc\Studies\emre\n38_e038_1arc_v3.dt2'
+        self.src_filename = r'C:\Users\emrea\Desktop\'22 codes\deep-ternaloc\deep-ternaloc\Studies\emre\data\n38_e038_1arc_v3.dt2'
         
         
         
@@ -49,7 +49,7 @@ class Plotting():
     def find_nearly_point(self,received_data):
 
         
-        received_data=3000-int(received_data)
+        received_data=3000-int(received_data.split(",")[2].split(".")[0])
         
         print(received_data)
         interval_X = received_data+5
@@ -63,17 +63,31 @@ class Plotting():
         
         near_points=np.where(np.logical_and(interval_Y<=self.data_array,self.data_array <=interval_X))
 
-        print(near_points)
+        #print(near_points)
         
         
         col = (np.random.random(), np.random.random(), np.random.random())
         print("abo")
         if counter ==5:
-            plt.scatter(near_points[1], near_points[0], c=[col],s=500, marker='x')
+            plt.contour(self.data_array, cmap = "viridis", 
+            levels = list(range(0, 2598, 100)))
+        
+            plt.title("Elevation Contours of BOLU ANKARA")
+            cbar = plt.colorbar()
+            plt.gca().set_aspect('equal', adjustable='box')  
+            plt.scatter(near_points[1], near_points[0], c=[col],s=50, marker='x')
 
             plt.show()
         else:
+            plt.contour(self.data_array, cmap = "viridis", 
+            levels = list(range(0, 2598, 100)))
+        
+            plt.title("Elevation Contours of BOLU ANKARA")
+            cbar = plt.colorbar()
+            plt.gca().set_aspect('equal', adjustable='box')  
             plt.scatter(near_points[1], near_points[0], c=[col])
+
+            plt.show()
             
 
 
@@ -126,14 +140,14 @@ class UnityInteraction():
     def connection_loop(self):
          #sleep 0.5 sec
 
-        print("sleep bitti")
+        #print("sleep bitti")
         self.sock.sendall("posString".encode("UTF-8")) #Converting string to Byte, and sending it to C#
-        print("data yollandi")
+        #print("data yollandi")
         self.receivedData = self.sock.recv(1024).decode("UTF-8") #receiveing data in Byte fron C#, and converting it to String
-        print("data alindi")
+        #print("data alindi")
         #self.receivedData = self.receivedData.split(".")[0]
         
-        print(self.receivedData)
+        #print(self.receivedData)
         
         return self.receivedData
         
@@ -142,12 +156,14 @@ if __name__ == "__main__":
     geo_object = Geo()
     data_array = geo_object.readAsArray()
     plot_object = Plotting(data_array)
+    #plot_object.plot_array()
     unity_object = UnityInteraction()
-    received_data=unity_object.connection_loop()
-    print("datayi aldim")
-    plot_object.find_x_y_position(received_data)
-    print("plotladim bitti")
-    counter=counter+1
+    while counter !=6:
+        received_data=unity_object.connection_loop()
+        #print("datayi aldim")
+        plot_object.find_nearly_point(received_data)
+        #print("plotladim bitti")
+        counter=counter+1
         
         
         
