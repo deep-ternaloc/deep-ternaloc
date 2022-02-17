@@ -24,7 +24,9 @@ if __name__ == "__main__":
     object = Object(dted_array)
     #plotify.plot_contour_map(dted_array)
 
+    start = time.time()
     while True:
+        end = time.time()
         unity_data = uc.receive_data()
         x,y,height = object.find_position(unity_data)
         #plotify.plot_object_position(x,y,dted_array)
@@ -39,11 +41,12 @@ if __name__ == "__main__":
 
         else:
             for i in range(len(particles)):
-                particles.move()
+                particles[i].move()
 
-        plotify.live_plot(x,y,dted_array,particles)
+        plotify.live_plot(x,y,dted_array,particles,counter)
 
-        
+        print(f"{abs(end-start)}, counter : {counter}")
+        counter += 1
 
 
         time.sleep(0.5)

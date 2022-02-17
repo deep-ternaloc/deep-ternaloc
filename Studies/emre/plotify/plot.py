@@ -38,7 +38,7 @@ class Plotify():
         
         #plt.show()
         
-    def live_plot(self, x,y,data_array,particles):
+    def live_plot(self, x,y,data_array,particles,cnt):
         
         
         self.loc_list_y.append(y)
@@ -51,20 +51,14 @@ class Plotify():
         cbar = plt.colorbar()
         plt.gca().set_aspect('equal', adjustable='box')   
         plt.plot(self.loc_list_x, self.loc_list_y, c=(0, 0, 0), marker='o', markersize=10)
-        print(len(particles))
-        for i in tqdm(range(len(particles))):
+        
+        for i in range(len(particles)):
             col = (np.random.random(), np.random.random(), np.random.random())
-            plt.scatter(particles[i].x,particles[i].y, c=[col], marker='o', s=50)
-            
+            plt.plot(particles[i].x_list,particles[i].y_list, c=col, marker='o',markersize=5)
 
             
         plt.show()
 
-    def plot_map(self, x,y,data_array,particles):
-
-        self.loc_list_y.append(y)
-        self.loc_list_x.append(x)
-        print(len(particles))
 
         
 

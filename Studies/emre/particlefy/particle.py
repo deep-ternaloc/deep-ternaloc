@@ -53,7 +53,10 @@ class Particle():
         self.interval = 0
         self.speed = 30
         self.scale = scale
-
+        self.x_list = []
+        self.y_list = []
+        self.x_list.append(x)
+        self.y_list.append(y)
 
     def move(self):
         '''
@@ -61,10 +64,13 @@ class Particle():
 
         '''
 
-        self.x += (self.speed/scale) * math.cos(self.theta)
-        self.y += (self.speed/scale) * math.sin(self.theta)
+        self.y += (self.speed) * math.cos(self.theta)
+        self.x += (self.speed/scale) * math.sin(self.theta)
+        self.x_list.append(self.x)
+        self.y_list.append(self.y)
 
-    def measure(self, data,interval,speed):
+
+    def measure_height(self, data):
         '''
         
         :param scale: scale of the map
@@ -75,6 +81,8 @@ class Particle():
         pass
 
         #place particle next position on matplotlib
+
+    
 
 
 
