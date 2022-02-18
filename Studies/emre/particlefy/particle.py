@@ -58,13 +58,13 @@ class Particle():
         self.x_list.append(x)
         self.y_list.append(y)
 
-    def move(self):
+    def move(self,speed):
         '''
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
 
-        self.y += (self.speed) * math.cos(self.theta)
+        self.y += (speed) * math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
         self.x_list.append(self.x)
         self.y_list.append(self.y)
