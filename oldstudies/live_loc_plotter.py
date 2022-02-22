@@ -105,6 +105,7 @@ class Plotting():
         
         
         self.live_plot()
+        
         #print(y_pos,x_pos)
         #plt.plot(x_pos, y_pos, color=(0, 0, 0), marker='o', markersize=10)
         
