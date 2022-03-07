@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt 
 import numpy as np
 from tqdm import tqdm
-
+import imageio
 scale = 108000/3600
 
 class Plotify():
@@ -41,23 +41,38 @@ class Plotify():
     def live_plot(self, x,y,data_array,particles,cnt):
         
         
+        if len(particles) == 0:
+            return
         self.loc_list_y.append(y)
         self.loc_list_x.append(x)
         
-        plt.contour(data_array, cmap = "viridis", 
-                    levels = list(range(0, 2598, 100)))
-        
-        plt.title("Elevation Contours of BOLU ANKARA")
-        cbar = plt.colorbar()
-        plt.gca().set_aspect('equal', adjustable='box')   
-        plt.plot(self.loc_list_x, self.loc_list_y, c=(0, 0, 0), marker='o', markersize=10)
-        
-        for i in range(len(particles)):
-            col = (np.random.random(), np.random.random(), np.random.random())
-            plt.plot(particles[i].x_list,particles[i].y_list, c=col, marker='o',markersize=5)
 
-            
-        plt.show()
+        try:
+            plt.clf()
+        except:
+            pass
+
+        if cnt %5  == 0 and cnt != 0:
+            plt.contour(data_array, cmap = "viridis", 
+            levels = list(range(0, 2598, 100)))
+        
+            plt.title("Elevation Contours of BOLU ANKARA")
+            cbar = plt.colorbar()
+            plt.gca().set_aspect('equal', adjustable='box')
+
+            plt.plot(self.loc_list_x, self.loc_list_y, c=(0, 0, 0), marker='o', markersize=10)
+
+            for i in range(len(particles)):
+                col = (np.random.random(), np.random.random(), np.random.random())
+                for j in particles[i].x_list:
+                    if j > 3600:
+                        continue
+                    else:
+                        plt.plot(particles[i].x_list,particles[i].y_list, c=col, marker='o',markersize=5)
+
+            plt.savefig(f'deep-ternaloc\Studies\emre\data\plt_files\eastern-anatolia-{cnt}.png')
+            print("Saved")
+        #plt.show()
 
 
         
