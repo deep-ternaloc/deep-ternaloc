@@ -9,7 +9,10 @@ class Object():
     def __init__(self,dted_array):
         self.dummy = None
         self.dted_data = dted_array
-        self.interval = 100
+        self.interval = 0
+
+
+
         self.clipped_near_points= []
         self.height_diff = 0
 
@@ -39,7 +42,7 @@ class Object():
         
 
 
-        return self.near_points
+        return self.near_points,height 
 
     def clip_nearly_heights(self):
         pass

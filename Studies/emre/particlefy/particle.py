@@ -1,6 +1,8 @@
 import numpy as np
 import math
 import random as r
+from objectify.object import Object
+
 scale = 108000/3600
 
 
@@ -57,7 +59,7 @@ class Particle():
         self.y_list = []
         self.x_list.append(x)
         self.y_list.append(y)
-        self.measurement_sigma =  100
+        self.measurement_sigma =  50
         self.sum_prob = 0
     def move(self,speed):
         '''
@@ -67,11 +69,10 @@ class Particle():
 
         self.y += (speed) * math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
-        if self.x or self.y > 3600:
-            pass
-        else: 
-            self.x_list.append(self.x)
-            self.y_list.append(self.y)
+
+         
+        self.x_list.append(self.x)
+        self.y_list.append(self.y)
 
 
     def measure_height(self, data):
@@ -82,10 +83,9 @@ class Particle():
         :param interval: interval for height data to accept
         :param speed: speed of the plane        
         '''
-        if self.x or self.y > 3600:
-            pass
-        else:
-            self.height = data[int(self.y),int(self.x)]
+
+        self.height = data[int(self.y),int(self.x)]
+
 
         #place particle next position on matplotlib
 
@@ -101,25 +101,37 @@ class Particle():
     def update_weight(self, robot_height):
         #print(self.x, self.y)
 
-        if self.x or self.y > 3600:
-            pass
+
             #print(self.weight)
         
         self.weight = self.probability_density_function(robot_height,self.height)
-        print(robot_height, self.height, self.weight)
+        
         
         self.sum_prob += self.weight
 
 
     
-    def resample_particles(particles,near_points):
+    def resample_particles(particles,near_points,dted_array):
         weights = []
 
         for particle in particles:
             weights += [particle.weight]
-    
-        print(sum(weights))
-        #if (sum(weights)<0.05):
+
+
+        print("Toplam Probability: {}, Particle sayisi {} ".format(sum(weights), len(particles)))
+
+        if (sum(weights)<0.05):
+            resampled_particles = []
+            for i in range(0,len(near_points[0])):
+                #particle oluştur 
+                height = dted_array[near_points[0][i]][near_points[1][i]]
+
+                resampled_particles += [Particle(near_points[1][i],near_points[0][i],height)]
+
+
+            print("low weight ! ! !")
+            return resampled_particles
+
         #    resampled_particles=[]
         #    xy_min = np.min(np.min(near_points,axis=1),axis=0)
         #    xy_max = np.max(np.max(near_points,axis=1),axis=0)
@@ -136,7 +148,7 @@ class Particle():
         resampled_particles = []
     
         for i in resample:
-            resampled_particles += [Particle(particles[i].x,particles[i].y,100)]
+            resampled_particles += [Particle(particles[i].x,particles[i].y,particles[i].height)]
 
         return resampled_particles
 
