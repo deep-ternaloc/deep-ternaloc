@@ -42,7 +42,7 @@ class Object():
         
 
 
-        return self.near_points,height 
+        return height 
 
     def clip_nearly_heights(self):
         pass

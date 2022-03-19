@@ -7,6 +7,7 @@ from particlefy.particle import Particle
 import time
 import tqdm
 import numpy as np
+import random
 
 x_list = []
 y_list = []
@@ -24,6 +25,8 @@ if __name__ == "__main__":
     geo = Geo()
     
 
+    object_x_list = []
+    object_y_list = []
 
     uc.establish_connection()
     dted_array = geo.readAsArray()
@@ -36,31 +39,36 @@ if __name__ == "__main__":
         unity_data = uc.receive_data()
         x,y,height = object.find_position(unity_data)
 
+        object_x_list.append(x)
+        object_y_list.append(y)
 
-
-    
-
-        #plotify.plot_object_position(x,y,dted_array)
-        near_points,object_height = object.find_nearly_heights(height)
+        object_height = object.find_nearly_heights(height)
 
 
         if counter == 0:
-            for i in range(0,len(near_points[0])):
+            #for i in range(0,len(near_points[0])):
                 #particle oluştur 
-                height = dted_array[near_points[0][i]][near_points[1][i]]
 
-                particles += [Particle(near_points[1][i],near_points[0][i],height)]
+                # random x y belirle 
+                #dtedde yerini bul
+                # particle oluştur
+
+            for i in range (1000):
+                x_particle = random.randint(0,3600)
+                y_particle = random.randint(0,3600)
+                height = dted_array[y_particle][x_particle]
+
+         ## x y yanlis olabilir
+
+                particles += [Particle(x_particle,y_particle,height)]
             y_list.append(y)
 
-            
+
             
 
         else:
 
-            #print(f"Distance : {abs((y-y_list[-1])/30)}")
             speed=abs(y-y_list[-1])
-
-
 
             y_list.append(y)
 
@@ -70,15 +78,15 @@ if __name__ == "__main__":
             for i in range(len(particles)):
 
                 if (particles[i].y or particles[i].x) > 3600:
-                    #print(particles[i].x,particles[i].y, i,range(len(particles)))
+
 
                     pop_indexes += [i]
                 else:
 
                     particles[i].measure_height(dted_array)
-                    particles[i].update_weight(object_height)
-                #print(f"Particle {i} : {particles[i].weight}")
-                #print(f"Particle {i} : {particles[i].height}, Object: {height}")
+
+                    particles[i].update_weight(object_height,counter)
+
 
 
 
@@ -88,34 +96,39 @@ if __name__ == "__main__":
                 j -= 1
 
 
-            #np.delete(particles,pop_indexes
+
             pop_indexes=[]
+            Particle.pdf_control(particles)
 
-            #for i in range(len(pop_indexes)):
-            #    print(pop_indexes[i])
-            #    print(len(particles))
-            #    particles.pop(pop_indexes[i])
-                #pop_indexes.pop(i)
-            #pop_indexes=[]
-            if counter > 10:
+            if counter%5 == 0 and counter != 0:
 
-                resampled_particles = Particle.resample_particles(particles,near_points,dted_array)
-
+                
+                print(f"Resample öncesi sayi {len(particles)}")
+                resampled_particles = Particle.resample_particles(particles,dted_array)
+                print(f"Resample sonrasi sayi {len(resampled_particles)}")
                 particles = resampled_particles
+                #Particle.print_particle_error(object_height,particles)
 
             
 
             
-            plotify.live_plot(x,y,dted_array,resampled_particles,counter)
+        
 
 
         
 
-        
-
+        print("Adim Sayisi: {}".format(counter))
+        plotify.live_plot(object_x_list,object_y_list,dted_array,particles,counter)
         counter += 1
 
         
 
 
-        
+        #TODO: PDF bok gibi kontrol et
+        #TODO: Movement sigma koordinata göre mesafeye göre değil
+        #TODO: Harita dışıları ağırlık düşür
+        #TODO: plotu resample sonrası yap
+        #TODO: 919000 parçacık
+        #TODO: izli şekilde particlelar (plot counter resample + 1 )
+
+

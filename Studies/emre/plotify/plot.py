@@ -1,3 +1,4 @@
+import random
 import matplotlib.pyplot as plt 
 import numpy as np
 from tqdm import tqdm
@@ -43,8 +44,8 @@ class Plotify():
         
         if len(particles) == 0:
             return
-        self.loc_list_y.append(y)
-        self.loc_list_x.append(x)
+        #self.loc_list_y.append(y)
+        #self.loc_list_x.append(x)
         
 
         try:
@@ -52,32 +53,25 @@ class Plotify():
         except:
             pass
 
-        if cnt %10  == 0 and cnt != 0:
+        if  cnt != 0:
             plt.contour(data_array, cmap = "viridis", 
             levels = list(range(0, 2598, 100)))
         
-            plt.title("Elevation Contours of BOLU ANKARA")
+            plt.title("Elevation Contours of ELAZIG")
             cbar = plt.colorbar()
             plt.gca().set_aspect('equal', adjustable='box')
 
-            plt.plot(self.loc_list_x, self.loc_list_y, c=(0, 0, 0), marker='o', markersize=10)
+            plt.plot(x, y, c=(0, 0, 0), marker='o', markersize=10)
+
+            print(f"Particle len in plot {len(particles)}")
 
             for i in range(len(particles)):
                 col = (np.random.random(), np.random.random(), np.random.random())
-                for j in particles[i].x_list:
-                    if j > 3600:
-                        continue
-                    else:
-                        plt.plot(particles[i].x_list,particles[i].y_list, c=col, marker='o',markersize=5)
+                #for j in particles[i].x_list:
+                #    if j > 3600:
+                #        continue
+                #    else:
+                plt.plot(particles[i].x,particles[i].y, c=col, marker='o',markersize=10)
 
             plt.savefig(f'deep-ternaloc\Studies\emre\data\plt_files\eastern-anatolia-{cnt}.png')
             print("Saved")
-        #plt.show()
-
-
-        
-
-        #for particle in particles:
-        #    col = (np.random.random(), np.random.random(), np.random.random())
-        #    plt.plot(particle[0], particle[1], color=col, marker='o', markersize=10)
-

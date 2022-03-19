@@ -59,15 +59,17 @@ class Particle():
         self.y_list = []
         self.x_list.append(x)
         self.y_list.append(y)
-        self.measurement_sigma =  50
+        self.measurement_sigma = 100
         self.sum_prob = 0
+        self.movement_sigma = 70
     def move(self,speed):
         '''
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-
-        self.y += (speed) * math.cos(self.theta)
+        print(f"Hiz {speed}")
+        print(f"Mov. Sigma  {np.random.normal(speed, self.movement_sigma)}")
+        self.y += np.random.normal(speed, self.movement_sigma) #* math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
 
          
@@ -98,36 +100,51 @@ class Particle():
         
         return 1/(sigma*math.sqrt(2*math.pi))*math.e**(-0.5 * ((x-mu)/sigma)**2)
     
-    def update_weight(self, robot_height):
+    def update_weight(self, robot_height,counter):
         #print(self.x, self.y)
 
 
             #print(self.weight)
+        weight = self.probability_density_function(robot_height, self.height)
+
+        if counter%5 != 0:
+
+            self.weight += weight 
         
-        self.weight = self.probability_density_function(robot_height,self.height)
+        else:
+
+            self.weight = self.probability_density_function(robot_height,self.height)
         
         
         self.sum_prob += self.weight
 
 
     
-    def resample_particles(particles,near_points,dted_array):
+    def resample_particles(particles,dted_array):
         weights = []
 
         for particle in particles:
             weights += [particle.weight]
 
 
-        print("Toplam Probability: {}, Particle sayisi {} ".format(sum(weights), len(particles)))
+        print("Toplam Weight: {}, Particle sayisi {} ".format(sum(weights), len(particles)))
+
+        
 
         if (sum(weights)<0.05):
             resampled_particles = []
-            for i in range(0,len(near_points[0])):
+            for i in range(len(particles)):
                 #particle oluştur 
-                height = dted_array[near_points[0][i]][near_points[1][i]]
+                
 
-                resampled_particles += [Particle(near_points[1][i],near_points[0][i],height)]
-
+                try:
+                    for i in range (1000):
+                        x_particle = r.randint(0,3600)
+                        y_particle = r.randint(0,3600)
+                        height = dted_array[y_particle][x_particle]
+                        resampled_particles += [Particle(x_particle,y_particle,height)]
+                except:
+                    pass
 
             print("low weight ! ! !")
             return resampled_particles
@@ -141,6 +158,10 @@ class Particle():
     
     
         resample = r.choices(range(len(particles)), weights=weights, k=len(particles))
+        
+
+
+        #print("Resampled: {}".format(len(resample)))
         #print(resample)
         #print(weights)
     
@@ -148,10 +169,31 @@ class Particle():
         resampled_particles = []
     
         for i in resample:
+            
             resampled_particles += [Particle(particles[i].x,particles[i].y,particles[i].height)]
+
+        print("Resampled: {}".format(len(resampled_particles)))
 
         return resampled_particles
 
 
 
 
+    def print_particle_error(height, particles):
+        weights = []
+        for particle in particles:
+            weights += [particle.weight]
+        best_particle = weights.index(max(weights))
+        print("Error: " +
+              str(round(abs(particles[best_particle].height - height), 2)))
+
+        print("Weight Sum: " + str(sum(weights)))
+        print()
+
+
+    def pdf_control(particles):
+        weights=0
+        for particle in particles:
+            weights += particle.weight
+        
+        print(f"PDF (if close to 0.5 it works) {round(weights*0.01,2)}")
