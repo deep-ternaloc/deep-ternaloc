@@ -61,7 +61,7 @@ class Particle():
         self.y_list.append(y)
         self.measurement_sigma = 100
         self.sum_prob = 0
-        self.movement_sigma = 70
+        self.movement_sigma = 30
     def move(self,speed):
         '''
         :param theta_dot: angular velocity, enter 0 for moving straight
@@ -133,18 +133,18 @@ class Particle():
 
         if (sum(weights)<0.05):
             resampled_particles = []
-            for i in range(len(particles)):
+            
                 #particle oluştur 
                 
 
-                try:
-                    for i in range (1000):
-                        x_particle = r.randint(0,3600)
-                        y_particle = r.randint(0,3600)
-                        height = dted_array[y_particle][x_particle]
-                        resampled_particles += [Particle(x_particle,y_particle,height)]
-                except:
-                    pass
+            try:
+                for i in range (1000):
+                    x_particle = r.randint(0,3600)
+                    y_particle = r.randint(0,3600)
+                    height = dted_array[y_particle][x_particle]
+                    resampled_particles += [Particle(x_particle,y_particle,height)]
+            except:
+                pass
 
             print("low weight ! ! !")
             return resampled_particles
