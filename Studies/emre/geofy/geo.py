@@ -5,10 +5,10 @@ import numpy as np
 class Geo():
     def __init__(self):
         self.src_filename = r'deep-ternaloc\Studies\emre\data\n38_e038_1arc_v3.dt2'
-        
-        
-        
-        
+
+
+
+
     def readAsArray(self):
         self.src_ds=gdal.Open(self.src_filename) 
         self.gt=self.src_ds.GetGeoTransform()

@@ -75,11 +75,11 @@ class Particle():
 
     def measure_height(self, data):
         '''
-        
+
         :param scale: scale of the map
-        :param data: dted 
+        :param data: dted
         :param interval: interval for height data to accept
-        :param speed: speed of the plane        
+        :param speed: speed of the plane
         '''
         self.height = data[int(self.y),int(self.x)]
 
@@ -103,7 +103,7 @@ class Particle():
         
         self.weight = self.probability_density_function(robot_height,self.height)
         
-        
+
         self.sum_prob += self.weight
 
 
@@ -138,12 +138,12 @@ class Particle():
     
     
         resample = r.choices(range(len(particles)), weights=weights, k=len(particles))
-        #print(resample)
-        #print(weights)
+#print(resample)
+#print(weights)
     
     
         resampled_particles = []
-    
+
         for i in resample:
             resampled_particles += [Particle(particles[i].x,particles[i].y,particles[i].height)]
 

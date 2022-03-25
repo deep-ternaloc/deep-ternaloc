@@ -70,11 +70,11 @@ class Particle():
 
     def measure_height(self, data):
         '''
-        
+
         :param scale: scale of the map
-        :param data: dted 
+        :param data: dted
         :param interval: interval for height data to accept
-        :param speed: speed of the plane        
+        :param speed: speed of the plane
         '''
         pass
 

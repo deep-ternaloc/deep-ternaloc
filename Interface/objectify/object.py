@@ -27,7 +27,7 @@ class Object():
     def find_nearly_heights(self,height):
         height = 3000-int(float(height))
 
-        
+
         self.interval_x = height+self.interval
         self.interval_y = height-self.interval
 
@@ -35,22 +35,21 @@ class Object():
 
 
         #print(f"Yukseklik : {height}, Istenen araliktaki nokta sayisi : {len(self.near_points[0])}")
-        
+
 
 
         return self.near_points
 
     def clip_nearly_heights(self):
         pass
-    
+
 
         if abs(self.near_points[1]-self.y_pos)**2 + abs(self.near_points[0]-self.x_pos)**2 <=10000:
             return True
 
 
-     
 
 
 
 
-    
+
