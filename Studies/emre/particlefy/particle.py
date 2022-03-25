@@ -32,7 +32,6 @@ class Plane():
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-
         self.x += theta_dot * math.cos(self.theta)
         self.y += theta_dot * math.sin(self.theta)
 
@@ -66,7 +65,6 @@ class Particle():
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-
         self.y += (speed) * math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
 
@@ -83,7 +81,6 @@ class Particle():
         :param interval: interval for height data to accept
         :param speed: speed of the plane        
         '''
-
         self.height = data[int(self.y),int(self.x)]
 
 
