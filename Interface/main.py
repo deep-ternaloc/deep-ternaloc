@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         QMainWindow.__init__(self)
-        
+
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
         self.ui.connectbutton.clicked.connect(self.connect_to_unity)
 
 
-        
+
 
 
 
@@ -73,15 +73,15 @@ class MainWindow(QMainWindow):
         self.data_array=self.data_array.astype(int)[:,:]
         self.object = Object(self.data_array)
         self.plotify = Plotify()
-    
+
     def prepare_contour_map(self):
         self.read_dted()
 
         self.contour_map.axes.cla()
         self.contour_map.axes.contour(self.data_array, cmap = "viridis", 
                     levels = list(range(0, 2598, 100)))
-        
-        
+
+
         #cbar = plt.colorbar()
         #plt.gca().set_aspect('equal', adjustable='box')   
 
@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
         self.contour_map.draw()
 
     def connect_to_unity(self):
-    
+
 
         self.data_thread = MyThread(self.uc)
         self.data_thread.coordinate_value.connect(self.find_position)
@@ -108,8 +108,8 @@ class MainWindow(QMainWindow):
                 self.particles += [Particle(near_points[1][i],near_points[0][i],height)]
             self.y_list.append(y)
 
-            
-            
+
+
 
         else:
 
@@ -120,15 +120,15 @@ class MainWindow(QMainWindow):
             self.y_list.append(y)
             for i in range(len(self.particles)):
                 self.particles[i].move(speed)
-        
+
         self.plotify.live_plot(x,y,self.data_array,self.particles,self.counter,self.contour_map)
         self.contour_map.draw()
         print("Drew")
         self.counter += 1
 
-        
 
-        
+
+
 class MyThread(QThread):
 
     def __init__(self, vehicle, parent=None):
@@ -140,7 +140,7 @@ class MyThread(QThread):
     def run(self):
 
         while True:
-            
+
             self.coordinate_val = self.mission.receive_data()
 
             self.coordinate_value.emit(self.coordinate_val)

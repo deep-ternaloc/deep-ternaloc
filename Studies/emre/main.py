@@ -22,7 +22,7 @@ if __name__ == "__main__":
     uc = UnityConnection()
     plotify = Plotify()
     geo = Geo()
-    
+
 
 
     uc.establish_connection()
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     object = Object(dted_array)
     #plotify.plot_contour_map(dted_array)
 
-    
+
     while True:
 
         unity_data = uc.receive_data()
@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
 
 
-    
+
 
         #plotify.plot_object_position(x,y,dted_array)
         near_points,object_height = object.find_nearly_heights(height)
@@ -52,8 +52,8 @@ if __name__ == "__main__":
                 particles += [Particle(near_points[1][i],near_points[0][i],height)]
             y_list.append(y)
 
-            
-            
+
+
 
         else:
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
             for i in range(len(particles)):
                 particles[i].move(speed)
-            
+
             for i in range(len(particles)):
 
                 if (particles[i].y or particles[i].x) > 3600:
@@ -103,19 +103,18 @@ if __name__ == "__main__":
 
                 particles = resampled_particles
 
-            
 
-            
+
+
             plotify.live_plot(x,y,dted_array,resampled_particles,counter)
 
 
-        
 
-        
+
+
 
         counter += 1
 
-        
 
 
-        
+
