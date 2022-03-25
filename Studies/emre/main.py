@@ -1,12 +1,8 @@
-from sympy import N
 from connectify.connect import UnityConnection
 from plotify.plot import Plotify
 from geofy.geo import Geo
 from objectify.object import Object
 from particlefy.particle import Particle
-import time
-import tqdm
-import numpy as np
 
 x_list = []
 y_list = []

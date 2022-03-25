@@ -1,8 +1,7 @@
 
-from osgeo import gdal,ogr
+from osgeo import gdal
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 
 src_filename = r'C:\Users\emrea\Desktop\deep-ternaloc\deep-ternaloc\Studies\emre\n38_e038_1arc_v3.dt2'
 src_ds=gdal.Open(src_filename) 

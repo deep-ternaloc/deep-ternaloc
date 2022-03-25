@@ -1,7 +1,5 @@
-import numpy as np
 import math
 import random as r
-from objectify.object import Object
 
 scale = 108000/3600
 

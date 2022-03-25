@@ -2,9 +2,6 @@ from osgeo import gdal
 import numpy as np
 import matplotlib.pyplot as plt
 import socket
-import time
-import random
-from matplotlib import transforms
 
 global counter
 counter=0

@@ -1,4 +1,3 @@
-import numpy as np
 import math
 
 scale = 108000/3600

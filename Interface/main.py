@@ -1,17 +1,8 @@
-from PySide2.QtWebEngineWidgets import QWebEngineView
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
-                            QSize, QTime, QUrl, Qt, QEvent, QTimer)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence,
-                           QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-import matplotlib
-import random
 from PyQt5.QtCore import pyqtSignal, QThread
 from osgeo import gdal
-import numpy as np
 import sys
 from ui import Ui_MainWindow
 from connectify.connect import UnityConnection
@@ -19,7 +10,6 @@ from objectify.object import Object
 from particlefy.particle import Particle
 from plotify.plot import Plotify
 import time
-import socket
 
 class MplCanvas(FigureCanvas):
 
