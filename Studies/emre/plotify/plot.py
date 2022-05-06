@@ -73,5 +73,5 @@ class Plotify():
                 #    else:
                 plt.plot(particles[i].x,particles[i].y, c=col, marker='o',markersize=10)
 
-            plt.savefig(f"C:/Users/emrea\Desktop/'22 codes/deep-ternaloc/deep-ternaloc/Studies/emre/data/plt_files/eastern-anatolia-{cnt}.png")
+            plt.savefig(f"deep-ternaloc/Studies/emre/data/plt_files/eastern-anatolia-{cnt}.png")
             print("Saved")

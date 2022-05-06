@@ -4,7 +4,7 @@ import numpy as np
 
 class Geo():
     def __init__(self):
-        self.src_filename = r'C:\Users\emrea\Desktop\'22 codes\deep-ternaloc\deep-ternaloc\Studies\emre\data\n38_e038_1arc_v3.dt2'
+        self.src_filename = r'deep-ternaloc\Studies\emre\data\n38_e038_1arc_v3.dt2'
         
         
         
