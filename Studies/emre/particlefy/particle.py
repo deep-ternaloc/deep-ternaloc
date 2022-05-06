@@ -1,3 +1,4 @@
+
 import numpy as np
 import math
 import random as r
@@ -58,7 +59,7 @@ class Particle():
         self.y_list = []
         self.x_list.append(x)
         self.y_list.append(y)
-        self.measurement_sigma = 100
+        self.measurement_sigma = 3
         self.sum_prob = 0
         self.movement_sigma = 30
     def move(self,speed):
@@ -66,8 +67,8 @@ class Particle():
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-        print(f"Hiz {speed}")
-        print(f"Mov. Sigma  {np.random.normal(speed, self.movement_sigma)}")
+        #print(f"Hiz {speed}")
+        #print(f"Mov. Sigma  {np.random.normal(speed, self.movement_sigma)}")
         self.y += np.random.normal(speed, self.movement_sigma) #* math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
 
@@ -98,6 +99,10 @@ class Particle():
         
         return 1/(sigma*math.sqrt(2*math.pi))*math.e**(-0.5 * ((x-mu)/sigma)**2)
     
+
+    def normalize(weights):
+        return (weights-np.min(weights)) / (np.max(weights)-np.min(weights))
+
     def update_weight(self, robot_height,counter):
         #print(self.x, self.y)
 
@@ -124,7 +129,7 @@ class Particle():
         for particle in particles:
             weights += [particle.weight]
 
-
+        weights = Particle.normalize(weights)
         print("Toplam Weight: {}, Particle sayisi {} ".format(sum(weights), len(particles)))
 
         
@@ -154,7 +159,10 @@ class Particle():
         #        resampled_particles += [Particle(r.uniform(low=xy_min,high=xy_max,size=(len(particles))))]
         #    return resampled_particles
     
-    
+        
+        print(f"Normalized weight sum: {sum(weights)}")
+        print(f"Max weight: {max(weights)}")
+        print(f"Min weight: {min(weights)}")
         resample = r.choices(range(len(particles)), weights=weights, k=len(particles))
         
 
@@ -190,8 +198,8 @@ class Particle():
 
 
     def pdf_control(particles):
-        weights=0
-        for particle in particles:
-            weights += particle.weight
+        sum_probability = 0
+        for particle in range(int(len(particles)/2)):
+            sum_probability += particles[particle].weight
         
-        print(f"PDF (if close to 0.5 it works) {round(weights*0.01,2)}")
+        print(f"PDF (if close to 0.5 it works) {round(sum_probability*0.01,2)}")

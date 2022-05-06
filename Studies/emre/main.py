@@ -121,11 +121,12 @@ if __name__ == "__main__":
 
 
 
-        #TODO: PDF bok gibi kontrol et
-        #TODO: Movement sigma koordinata göre mesafeye göre değil
-        #TODO: Harita dışıları ağırlık düşür
-        #TODO: plotu resample sonrası yap
-        #TODO: 919000 parçacık
-        #TODO: izli şekilde particlelar (plot counter resample + 1 )
+        #TODO: Y ekseni ekle
+        #TODO: PDF Grafik ekle
+        #TODO: PDF düzgün mü göster
+        #TODO: Adım sayısını değiştir
+        #TODO: Movement and measure sigma değiştir
+        #TODO: Araca diğer ekseni ekleyebiliriz
+        
 
 
