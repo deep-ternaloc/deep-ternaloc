@@ -23,7 +23,7 @@ if __name__ == "__main__":
     uc = UnityConnection()
     plotify = Plotify()
     geo = Geo()
-    
+
 
     object_x_list = []
     object_y_list = []
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     object = Object(dted_array)
     #plotify.plot_contour_map(dted_array)
 
-    
+
     while True:
 
         unity_data = uc.receive_data()
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
             for i in range(len(particles)):
                 particles[i].move(speed)
-            
+
             for i in range(len(particles)):
 
                 if (particles[i].y or particles[i].x) > 3600:
@@ -109,19 +109,16 @@ if __name__ == "__main__":
                 particles = resampled_particles
                 #Particle.print_particle_error(object_height,particles)
 
-            
 
             
         
 
 
-        
 
         print("Adim Sayisi: {}".format(counter))
         plotify.live_plot(object_x_list,object_y_list,dted_array,particles,counter)
         counter += 1
 
-        
 
 
         #TODO: PDF bok gibi kontrol et

@@ -17,7 +17,7 @@ class Plotify():
     def plot_contour_map(self,data_array):
         plt.contour(data_array, cmap = "viridis", 
                     levels = list(range(0, 2598, 100)))
-        
+
         plt.title("Elevation Contours of Eastern Anatolia")
         cbar = plt.colorbar()
         plt.gca().set_aspect('equal', adjustable='box')  
@@ -26,22 +26,22 @@ class Plotify():
 
 
     def plot_object_position(self,x,y,data_array):
-        
 
-        
+
+
         self.loc_list_y.append(y)
         self.loc_list_x.append(x)
-        
-        
+
+
         self.live_plot(data_array)
         #print(y_pos,x_pos)
         #plt.plot(x_pos, y_pos, color=(0, 0, 0), marker='o', markersize=10)
-        
+
         #plt.show()
-        
+
     def live_plot(self, x,y,data_array,particles,cnt):
-        
-        
+
+
         if len(particles) == 0:
             return
         #self.loc_list_y.append(y)

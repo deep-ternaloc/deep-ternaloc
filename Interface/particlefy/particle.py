@@ -30,7 +30,6 @@ class Plane():
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-
         self.x += theta_dot * math.cos(self.theta)
         self.y += theta_dot * math.sin(self.theta)
 
@@ -63,7 +62,6 @@ class Particle():
         :param theta_dot: angular velocity, enter 0 for moving straight
 
         '''
-
         self.y += (speed) * math.cos(self.theta)
         self.x += (self.speed/scale) * math.sin(self.theta)
         self.x_list.append(self.x)
@@ -72,11 +70,11 @@ class Particle():
 
     def measure_height(self, data):
         '''
-        
+
         :param scale: scale of the map
-        :param data: dted 
+        :param data: dted
         :param interval: interval for height data to accept
-        :param speed: speed of the plane        
+        :param speed: speed of the plane
         '''
         pass
 
