@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
             for i in range(len(particles)):
 
-                if (particles[i].y or particles[i].x) > 3600:
+                if particles[i].y >3600 or particles[i].x>3600 or particles[i].y<0 or particles[i].x <0:
 
 
                     pop_indexes += [i]
@@ -100,7 +100,7 @@ if __name__ == "__main__":
             pop_indexes=[]
             Particle.pdf_control(particles)
 
-            if counter%5 == 0 and counter != 0:
+            if counter%10 == 0 and counter != 0:
 
                 
                 print(f"Resample öncesi sayi {len(particles)}")
@@ -121,11 +121,12 @@ if __name__ == "__main__":
 
 
 
-        #TODO: Y ekseni ekle
-        #TODO: PDF Grafik ekle
-        #TODO: PDF düzgün mü göster
-        #TODO: Adım sayısını değiştir
-        #TODO: Movement and measure sigma değiştir
+        #TODO: Y ekseni ekle DONE
+        #TODO: PDF Grafik ekle DONE
+        #TODO: PDF düzgün mü göster DONE
+        #TODO: Adım sayısını değiştir #DONE
+        #TODO: Movement and measure sigma değiştir DONE
+        
         #TODO: Araca diğer ekseni ekleyebiliriz
         
 

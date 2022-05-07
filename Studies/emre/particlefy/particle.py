@@ -59,7 +59,7 @@ class Particle():
         self.y_list = []
         self.x_list.append(x)
         self.y_list.append(y)
-        self.measurement_sigma = 3
+        self.measurement_sigma = 15
         self.sum_prob = 0
         self.movement_sigma = 30
     def move(self,speed):
@@ -70,7 +70,7 @@ class Particle():
         #print(f"Hiz {speed}")
         #print(f"Mov. Sigma  {np.random.normal(speed, self.movement_sigma)}")
         self.y += np.random.normal(speed, self.movement_sigma) #* math.cos(self.theta)
-        self.x += (self.speed/scale) * math.sin(self.theta)
+        self.x = np.random.normal(self.x, self.movement_sigma) #* math.sin(self.theta)
 
          
         self.x_list.append(self.x)
@@ -110,7 +110,7 @@ class Particle():
             #print(self.weight)
         weight = self.probability_density_function(robot_height, self.height)
 
-        if counter%5 != 0:
+        if counter%10 != 0:
 
             self.weight += weight 
         
@@ -191,7 +191,7 @@ class Particle():
             weights += [particle.weight]
         best_particle = weights.index(max(weights))
         print("Error: " +
-              str(round(abs(particles[best_particle].height - height), 2)))
+              str(round(abs(particles[best_particle].y - y), 2)))
 
         print("Weight Sum: " + str(sum(weights)))
         print()

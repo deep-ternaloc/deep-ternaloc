@@ -53,7 +53,7 @@ class Plotify():
         except:
             pass
 
-        if  cnt != 0:
+        if  cnt %5==0 and cnt !=0:
             plt.contour(data_array, cmap = "viridis", 
             levels = list(range(0, 2598, 100)))
         
