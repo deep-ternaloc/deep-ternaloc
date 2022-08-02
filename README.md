@@ -8,3 +8,6 @@ Terrain Referenced Navigation (TRN) is a technique to estimate the position of a
 
 https://deep-ternaloc.github.io/deep-ternaloc/
 
+## Current Results
+
+![alt text](https://github.com/deep-ternaloc/deep-ternaloc/blob/main/Results/particle_gif.gif "1D Particle Filter Application")
