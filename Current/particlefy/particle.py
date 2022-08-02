@@ -1,4 +1,3 @@
-
 import numpy as np
 import math
 import random as r
@@ -85,7 +84,7 @@ class Particle():
         :param interval: interval for height data to accept
         :param speed: speed of the plane
         '''
-        self.height = data[int(self.y),int(self.x)]
+        self.height = data[int(self.x),int(self.y)]  #####################################################
 
 
         #place particle next position on matplotlib
